@@ -14,7 +14,7 @@ from sqlalchemy.orm import sessionmaker
 #创建连接
 '''什么数据库+数据库的包：//用户名：密码@主机/数据库名称（db）'''
 engine = create_engine("mysql+pymysql://root:35278479@localhost/us_states",
-                       encoding='utf-8', echo=False) #echo打印所有信息
+                       encoding='utf-8', echo=False) #echo表示是否打印所有操作信息
 
 Base = declarative_base()  # 生成orm基类
 
@@ -30,11 +30,11 @@ class User(Base):   #继承基类
         return "<%s name:%s>" % (self.id, self.name)
 
 
-# Session_class = sessionmaker(bind=engine)  #返回的是类，创建与数据库的会话session类 ,这里返回给session的是个class,不是实例
-# Session = Session_class()  #这里再实例化，生成session实例，这个session就和pymysql里的cursor一样
+Session_class = sessionmaker(bind=engine)  #返回的是类，创建与数据库的会话session类 ,这里返回给session的是个class,不是实例
+Session = Session_class()  #这里再实例化，生成session实例，这个session就和pymysql里的cursor一样
 
 '''创建表结构'''
-Base.metadata.create_all(engine)
+# Base.metadata.create_all(engine)
 
 
 '''插入数据'''
@@ -81,18 +81,19 @@ Base.metadata.create_all(engine)
 
 '''统计和分组'''
 # from sqlalchemy import func
-# # print(Session.query(User).filter(User.name.like("lk%")).count())
-# print(Session.query(User.name, func.count(User.name)).group_by(User.name).all() )
+# print(Session.query(User).filter(User.name.like("lk%")).count())    #查找表格中lk开头的人出现多少次
+# print(Session.query(User.name, func.count(User.name)).group_by(User.name).all() )   #统计每个name出现多少次
 
 
 
 '''删除'''
-# Session.delete()
+Session.query(User).filter(User.id > 2).delete()
+Session.commit()
 
 
 
 '''连表查询'''
-# ret = Session.query(User, Favor).filter(User.id == Favor.nid).all()
+# ret = Session.query(User, Favor).filter(User.id == Favor.id).all()
 #
 # ret = Session.query(Person).join(Favor).all()
 #
