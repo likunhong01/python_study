@@ -14,7 +14,7 @@ import time
 
 fig, ax = plt.subplots()
 xdata, ydata = [], []
-ln, = ax.plot([], [],label='temperature',markerfacecolor='blue',marker='o')
+ln, = ax.plot([], [],label='temperature')
 tem = []
 
 def init():
