@@ -21,7 +21,7 @@ while True:
     count = 0;
     while True:
         # recvdata = conn.recv(1024)
-        temperature = random.randint(-40,40)
+        temperature = random.randint(-50,50)
         print(temperature)
         conn.send(bytes(str(temperature).encode()))
         count += 1
